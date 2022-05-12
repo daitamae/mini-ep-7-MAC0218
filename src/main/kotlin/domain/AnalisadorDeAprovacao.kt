@@ -12,4 +12,22 @@ class AnalisadorDeAprovacao {
     //
     // ---------------------------------
 
+    private CriterioDeAprovacao criterio;
+
+    fun defineCriterio(criterioDeAprovacao: CriterioDeAprovacao)
+    {
+        criterio = criterioDeAprovacao;
+    }
+
+    fun fechaBoletim(boletim: Boletim) : BoletimFechado
+    {
+        boletimFechado: BoletimFechado = BoletimFechado();
+
+        boletimFechado.mediaEPs = boletim.mediaEPs;
+        boletimFechado.mediaMiniEPs = boletim.mediaMiniEPs;
+        boletimFechado.mediaFinal = criterio.mediaFinal(boletim);
+        boletimFechado.foiAprovado = criterio.estaAprovado(boletim);
+
+        return boletimFechado;
+    }
 }
