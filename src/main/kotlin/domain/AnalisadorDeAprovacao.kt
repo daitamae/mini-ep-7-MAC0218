@@ -1,4 +1,6 @@
 package domain
+import domain.criterios.CriterioDeAprovacao
+import domain.criterios.Basico
 
 class AnalisadorDeAprovacao {
 
@@ -12,22 +14,20 @@ class AnalisadorDeAprovacao {
     //
     // ---------------------------------
 
-    private CriterioDeAprovacao criterio;
+    private var criterio: CriterioDeAprovacao = Basico()
 
     fun defineCriterio(criterioDeAprovacao: CriterioDeAprovacao)
     {
-        criterio = criterioDeAprovacao;
+        criterio = criterioDeAprovacao
     }
 
     fun fechaBoletim(boletim: Boletim) : BoletimFechado
     {
-        boletimFechado: BoletimFechado = BoletimFechado();
-
-        boletimFechado.mediaEPs = boletim.mediaEPs;
-        boletimFechado.mediaMiniEPs = boletim.mediaMiniEPs;
-        boletimFechado.mediaFinal = criterio.mediaFinal(boletim);
-        boletimFechado.foiAprovado = criterio.estaAprovado(boletim);
-
-        return boletimFechado;
+        return BoletimFechado(
+            boletim.mediaEPs,
+            boletim.mediaMiniEPs,
+            criterio.mediaFinal(boletim),
+            criterio.estaAprovado(boletim)
+        )
     }
 }
